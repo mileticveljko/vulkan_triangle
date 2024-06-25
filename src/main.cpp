@@ -10,20 +10,20 @@ int main(int argc, char* argv[])
 	UNUSED(argc);
 	UNUSED(argv);
 
-  	if(!glfwInit())
-    {
-    	return 1;
-    }
+	if(!glfwInit())
+	{
+		return 1;
+	}
 
-    if(!glfwVulkanSupported())
-   	{
-    	return 1;
-    }
+	if(!glfwVulkanSupported())
+	{
+		return 1;
+	}
 
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan Triangle",
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan Triangle",
                                           nullptr, nullptr);
 
 	if(!window)
@@ -32,10 +32,10 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-    while (!glfwWindowShouldClose(window))
-    {
-  		glfwPollEvents();  	
-    }
+	while (!glfwWindowShouldClose(window))
+	{
+		glfwPollEvents();  	
+	}
 
 	glfwTerminate();
   
