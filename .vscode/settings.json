@@ -1,9 +1,0 @@
-{
-    "makefile.launchConfigurations": [
-        {
-            "cwd": "/home/dzo/Desktop/priv/vulkan_triangle/bin",
-            "binaryPath": "/home/dzo/Desktop/priv/vulkan_triangle/bin/vulkan_triangle_tut",
-            "binaryArgs": []
-        }
-    ]
-}
