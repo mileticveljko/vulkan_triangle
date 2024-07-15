@@ -1,9 +1,32 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
+#include "v_core.hpp"
+
 #define WIDTH 800
 #define HEIGHT 600
 #define UNUSED(x) (void)x
+
+class Application
+{
+public:
+	Application(const char* appName)
+	{
+		vulkanCore = new V::Core(appName);
+	}
+
+	~Application()
+	{ 
+		delete vulkanCore;
+	}
+
+	void RenderScene()
+	{
+
+	}
+private:
+	V::Core *vulkanCore;
+};
 
 int main(int argc, char* argv[])
 {
@@ -32,9 +55,13 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
+	Application app("Vulkan Tutorial");
+
     while (!glfwWindowShouldClose(window))
     {
-  		glfwPollEvents();  	
+  		glfwPollEvents();
+
+		app.RenderScene();
     }
 
 	glfwTerminate();
