@@ -12,7 +12,7 @@ class Application
 public:
 	Application(const char* appName)
 	{
-		vulkanCore = new V::Core(appName);
+		vulkanCore = V::Core::CreateVulkanCore(appName);
 	}
 
 	~Application()

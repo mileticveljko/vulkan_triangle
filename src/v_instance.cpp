@@ -1,11 +1,12 @@
-#include "v_instance.hpp"
+#include "v_core.hpp"
+#include "v_types.hpp"
 
 #include <vector>
 #include <stdio.h>
 
 namespace V
 {
-    Instance::Instance(const char* appName)
+    void Core::CreateInstance(const char* appName)
     {
         std::vector<const char*> Layers = {
             "VK_LAYER_KHRONOS_validation"
@@ -39,7 +40,7 @@ namespace V
             .ppEnabledExtensionNames = Extensions.data()
         };
 
-        VkResult res = vkCreateInstance(&CreateInfo, nullptr, &m_Instance);
+        VkResult res = vkCreateInstance(&CreateInfo, nullptr, &m_Instance->vulkan_instance);
         if(res != VK_SUCCESS)
         {
             fprintf(stderr, "[ERROR] Unable to create instance! Error core: %d\n", res);
@@ -48,13 +49,8 @@ namespace V
         fprintf(stdout, "[INFO] Vulkan instance created!\n");
     }
 
-    Instance::~Instance()
+    void Core::DestroyInstance()
     {
-        vkDestroyInstance(m_Instance, nullptr);
-    }
-
-    const VkInstance& Instance::GetInstance() const 
-    {
-        return m_Instance;
+        vkDestroyInstance(m_Instance->vulkan_instance, nullptr);
     }
 }
