@@ -45,11 +45,12 @@ namespace V
             fprintf(stderr, "[ERROR] Unable to create instance! Error core: %d\n", res);
             exit(2);
         }
+        fprintf(stdout, "[INFO] Vulkan instance created!\n");
     }
 
     Instance::~Instance()
     {
-
+        vkDestroyInstance(m_Instance, nullptr);
     }
 
     const VkInstance& Instance::GetInstance() const 
