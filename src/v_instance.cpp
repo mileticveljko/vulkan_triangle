@@ -52,5 +52,7 @@ namespace V
     void Core::DestroyInstance()
     {
         vkDestroyInstance(m_Instance->vulkan_instance, nullptr);
+        
+        printf("[INFO] Vulkan instance destroyed!\n");
     }
 }

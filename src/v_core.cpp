@@ -1,6 +1,8 @@
 #include "v_core.hpp"
 #include "v_types.hpp"
 
+#include <stdio.h>
+
 namespace V
 {
     Core* Core::s_Core = nullptr;
@@ -26,6 +28,8 @@ namespace V
 
     Core::~Core()
     {
+        printf("---------------------------\n");
+
         DestroyDebugMessenger();
         DestroyInstance();
 

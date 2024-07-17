@@ -4,6 +4,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+static VKAPI_ATTR VkBool32 VKAPI_CALL DebugCallback(
+    VkDebugUtilsMessageSeverityFlagBitsEXT Severity,
+    VkDebugUtilsMessageTypeFlagsEXT Type,
+    const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+    void* pUserData)
+{
+    (void)pUserData;
+
+    printf("Debug callback: %s\n\tSeverity: %d\n\tType: %d\n\tObjects ",
+            pCallbackData->pMessage, Severity, Type);
+    for(uint32_t i = 0; i < pCallbackData->objectCount; i++) {
+        printf("%lx ", pCallbackData->pObjects[i].objectHandle);
+    }
+
+    return VK_FALSE;
+}
+
 namespace V
 {
     void Core::CreateDebugMessenger()
@@ -20,7 +37,7 @@ namespace V
             .messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
                             VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
                             VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT,
-            .pfnUserCallback = nullptr,
+            .pfnUserCallback = &DebugCallback,
             .pUserData = nullptr
         };
 
@@ -49,6 +66,17 @@ namespace V
 
     void Core::DestroyDebugMessenger()
     {
-        
+        PFN_vkDestroyDebugUtilsMessengerEXT vkDestroyDebugUtilsMessenger = VK_NULL_HANDLE;
+        vkDestroyDebugUtilsMessenger = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(
+            m_Instance->vulkan_instance,
+            "vkDestroyDebugUtilsMessengerEXT");
+        if(!vkDestroyDebugUtilsMessenger)
+        {
+            fprintf(stderr, "[ERROR] Unable to find proc address of \"vkDestroyDebugUtilsMessengerEXT\" function!\n");
+            exit(2);
+        }
+        vkDestroyDebugUtilsMessenger(m_Instance->vulkan_instance, m_Dbg->vulkan_dbg, nullptr);
+
+        printf("[INFO] Vulkan debug messenger destroyed!\n");
     }
 }
